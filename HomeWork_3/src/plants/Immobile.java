@@ -20,5 +20,6 @@ public abstract class Immobile implements SeaCreature {
         this.y = y;
         this.size = size;
     }
+
     public abstract void drawCreature(Graphics g);
 }
