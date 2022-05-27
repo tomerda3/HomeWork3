@@ -104,9 +104,8 @@ public class AquaPanel extends JPanel implements ActionListener {
         if (e.getSource() == addAnimalButtons) {
             Window parentWindow = SwingUtilities.windowForComponent(this);
             JFrame parentFrame = null;
-            if (parentWindow instanceof JFrame) {
+            if (parentWindow instanceof JFrame)
                 parentFrame = (JFrame)parentWindow;
-            }
 
             AddAnimalDialog dialog = new AddAnimalDialog(parentFrame, "Add Animal", true);
             dialog.setVisible(true);
@@ -115,10 +114,18 @@ public class AquaPanel extends JPanel implements ActionListener {
                 Swimmable s;
                 if (animals_count < 5) {
                     if (Objects.equals(dialog.getAnimal_Type(), "Fish"))
-                        s = new Fish(dialog.getAnimalSize(), getWidth() / 2, getHeight() / 2, dialog.gethSpeed(), dialog.getvSpeed(), dialog.getAnimalColor(), this);
+                        //s = new Fish(dialog.getAnimalSize(), getWidth() / 2, getHeight() / 2, dialog.gethSpeed(), dialog.getvSpeed(), dialog.getAnimalColor(), this); // Without factory
+                        s = (Fish) AnimalFactory.produceSeaCreature("Fish");
                     else
-                        s = new Jellyfish(dialog.getAnimalSize(), getWidth() / 2, getHeight() / 2, dialog.gethSpeed(), dialog.getvSpeed(), dialog.getAnimalColor(), this);
-
+                        //s = new Jellyfish(dialog.getAnimalSize(), getWidth() / 2, getHeight() / 2, dialog.gethSpeed(), dialog.getvSpeed(), dialog.getAnimalColor(), this); // Without factory
+                        s = (Jellyfish) AnimalFactory.produceSeaCreature("Jellyfish");
+                    s.setSize(dialog.getAnimalSize());
+                    s.setX_front(getWidth() / 2);
+                    s.setY_front(getHeight() / 2);
+                    s.setHorSpeed(dialog.gethSpeed());
+                    s.setVerSpeed(dialog.getvSpeed());
+                    s.setCol(dialog.getAnimalColor());
+                    s.setAp(this);
                     data[animals_count] = new Object[]{s.getAnimalName(), s.getColor(), s.getSize(), s.getHorSpeed(), s.getVerSpeed(), s.getEatCount()};
                     animals_count++;
                     animals.add(s);
@@ -155,6 +162,7 @@ public class AquaPanel extends JPanel implements ActionListener {
             }
 
             animals.clear();
+            plants.clear();
             animals_count = 0;
             data[0] = new Object[]{"", "", "", "", "", ""};
             data[1] = new Object[]{"", "", "", "", "", ""};
@@ -203,9 +211,8 @@ public class AquaPanel extends JPanel implements ActionListener {
         else if (e.getSource() == AddPlantsDialog) {
             Window parentWindow = SwingUtilities.windowForComponent(this);
             JFrame parentFrame = null;
-            if (parentWindow instanceof JFrame) {
+            if (parentWindow instanceof JFrame)
                 parentFrame = (JFrame)parentWindow;
-            }
 
             AddPlantsDialog dialog = new AddPlantsDialog(parentFrame, "Add Plant", true);
             dialog.setVisible(true);
@@ -214,9 +221,13 @@ public class AquaPanel extends JPanel implements ActionListener {
                 Immobile im;
                 if (plants_count < 5) {
                     if (Objects.equals(dialog.getPlant_Type(), "Laminaria"))
-                        im = new Laminaria(dialog.getX_location(), 50, dialog.getPlantSize());
+                        //im = new Laminaria(dialog.getX_location(), dialog.getPlantSize()); // Without factory
+                        im = (Laminaria) PlantFactory.produceSeaCreature("Laminaria");
                     else
-                        im = new Zostera(dialog.getX_location(), 50, dialog.getPlantSize());
+                        //im = new Zostera(dialog.getX_location(), dialog.getPlantSize()); // Without factory
+                        im = (Zostera) PlantFactory.produceSeaCreature("Zostera");
+                    im.setX(dialog.getX_location());
+                    im.setSize(dialog.getPlantSize());
                     plants.add(im);
                     plants_count++;
                 }
