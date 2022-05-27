@@ -26,7 +26,7 @@ public class AquaPanel extends JPanel implements ActionListener {
     HashSet<Swimmable> animals;
     int sumCountEat = 0;
     public boolean isSetImage = false;
-    private final Worm worm = new Worm();
+//    private final Worm worm = null;
     int animals_count = 0;
     String[] columnNames = {"Animal", "Color", "Size", "Hor. speed", "Ver. speed", "Eat counter"};
     Object[][] data = new Object[6][6];
@@ -169,8 +169,7 @@ public class AquaPanel extends JPanel implements ActionListener {
                     s.setBarrierSync(barrier);
                 }
             }
-            worm.x = getWidth()/2;
-            worm.y = getHeight()/2;
+            Worm.getInstance().setlocation(getWidth()/2,getHeight()/2);
             Swimmable.setFoodFlag(true);
             repaint();
         }
@@ -219,7 +218,7 @@ public class AquaPanel extends JPanel implements ActionListener {
         }
 
         if (Swimmable.foodFlag)
-            worm.draw(g);
+            Worm.getInstance().draw(g);
 
         getParent().repaint();
     }
