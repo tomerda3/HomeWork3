@@ -143,7 +143,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     @Override
     public void run() {
         boolean flag_x = true, flag_y = true, didnt_move_X = false;
-        int width = 736, height = 440;
+        int width = 936, height = 440;
         while (true) {
             if (waitflag) {
                 synchronized (this) {
