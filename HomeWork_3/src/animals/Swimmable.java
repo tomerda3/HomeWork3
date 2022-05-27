@@ -1,6 +1,8 @@
 package animals;
 
 import start.AquaPanel;
+import start.SeaCreature;
+
 import java.awt.*;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
@@ -10,7 +12,7 @@ import java.util.concurrent.CyclicBarrier;
  * @see Fish
  * @see Jellyfish
  */
-public abstract class Swimmable extends Thread {
+public abstract class Swimmable extends Thread  implements SeaCreature {
     /**
      * DISTANCE_EAT - Represents how much animal can eat.
      * eatCount - Represents the amount of food the animal ate, start from 0.
@@ -57,7 +59,7 @@ public abstract class Swimmable extends Thread {
      * Abstract functions that any object that can swim must realize.
      */
     public abstract String getAnimalName();
-    public abstract void drawAnimal(Graphics g);
+    public abstract void drawCreature(Graphics g);
 
     /**
      * A function that returns the horizontal velocity of the animal.
@@ -153,7 +155,8 @@ public abstract class Swimmable extends Thread {
             }
             if (foodFlag) {
                 try {
-                    barrierSync.await();
+                    if(barrierSync != null)
+                        barrierSync.await();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (BrokenBarrierException e) {
