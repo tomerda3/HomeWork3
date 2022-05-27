@@ -4,6 +4,7 @@ import start.AquaPanel;
 import start.SeaCreature;
 
 import java.awt.*;
+import java.util.Objects;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
@@ -12,7 +13,7 @@ import java.util.concurrent.CyclicBarrier;
  * @see Fish
  * @see Jellyfish
  */
-public abstract class Swimmable extends Thread  implements SeaCreature {
+public abstract class Swimmable extends Thread  implements SeaCreature, Cloneable{
     /**
      * DISTANCE_EAT - Represents how much animal can eat.
      * eatCount - Represents the amount of food the animal ate, start from 0.
@@ -294,6 +295,24 @@ public abstract class Swimmable extends Thread  implements SeaCreature {
      */
     public static void setFoodFlag(boolean flag) {
         foodFlag = flag;
+    }
+
+    public Object clone() {
+        Object clone = null;
+        try {
+            clone = super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return clone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Swimmable swimmable = (Swimmable) o;
+        return horSpeed == swimmable.horSpeed && verSpeed == swimmable.verSpeed && DISTANCE_EAT == swimmable.DISTANCE_EAT && size == swimmable.size && col == swimmable.col && eatCount == swimmable.eatCount && x_front == swimmable.x_front && y_front == swimmable.y_front && x_dir == swimmable.x_dir && waitflag == swimmable.waitflag && ap.equals(swimmable.ap) && barrierSync.equals(swimmable.barrierSync);
     }
 }
 
