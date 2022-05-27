@@ -1,13 +1,7 @@
 package plants;
 
 public class PlantFactory {
-
-    public static int count =0;
-    public static Object produceSeaCreature(String type)
-    {
-        if (count > 5)
-            return null;
-        count++;
+    public static Object produceSeaCreature(String type) {
         Immobile plant = null;
         switch (type)
         {
