@@ -114,17 +114,15 @@ public class AquaPanel extends JPanel implements ActionListener {
             if (dialog.getAnimalSize() != 0) {
                 Swimmable s;
                 if (animals_count < 5) {
-                    if (Objects.equals(dialog.getAnimal_Type(), "Fish")){
+                    if (Objects.equals(dialog.getAnimal_Type(), "Fish"))
                         s = new Fish(dialog.getAnimalSize(), getWidth() / 2, getHeight() / 2, dialog.gethSpeed(), dialog.getvSpeed(), dialog.getAnimalColor(), this);
-                    }
-                    else {
+                    else
                         s = new Jellyfish(dialog.getAnimalSize(), getWidth() / 2, getHeight() / 2, dialog.gethSpeed(), dialog.getvSpeed(), dialog.getAnimalColor(), this);
-                    }
 
                     data[animals_count] = new Object[]{s.getAnimalName(), s.getColor(), s.getSize(), s.getHorSpeed(), s.getVerSpeed(), s.getEatCount()};
                     animals_count++;
                     animals.add(s);
-                    // start the object theard run.
+                    // start the object thread run.
                     s.start();
                 }
             }
@@ -215,12 +213,10 @@ public class AquaPanel extends JPanel implements ActionListener {
             if (dialog.getPlantSize() != 0) {
                 Immobile im;
                 if (plants_count < 5) {
-                    if (Objects.equals(dialog.getPlant_Type(), "Laminaria")){
+                    if (Objects.equals(dialog.getPlant_Type(), "Laminaria"))
                         im = new Laminaria(dialog.getX_location(), 10, dialog.getPlantSize());
-                    }
-                    else {
+                    else
                         im = new Zostera(dialog.getX_location(), 10, dialog.getPlantSize());
-                    }
                     plants.add(im);
                     plants_count++;
                 }
