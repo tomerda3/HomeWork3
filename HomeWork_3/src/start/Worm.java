@@ -6,7 +6,18 @@ import java.awt.*;
  * @see AquaPanel
  */
 public class Worm {
-    public int x, y;
+    private int x, y;
+    private static Worm instance = null;
+    private Worm(){ }
+    public static Worm getInstance( ) {
+        if (instance == null)
+            instance = new Worm();
+        return instance;
+    }
+    public void setlocation(int x,int y){
+        this.x = x;
+        this.y = y;
+    }
 
     public void draw(Graphics g) {
         ((Graphics2D) g).setStroke(new BasicStroke(3));
