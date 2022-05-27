@@ -14,6 +14,9 @@ public class Jellyfish extends Swimmable {
     public Jellyfish(int size, int x_front, int y_front, int horSpeed, int verSpeed, int col, AquaPanel ap) {
         super(size, x_front, y_front, horSpeed, verSpeed, col, ap);
     }
+    public Jellyfish() {
+        super(30, 30, 30, 10, 10, 2, null);
+    }
 
     /**
      * A function that returns the class name "Jellyfish".
@@ -26,7 +29,7 @@ public class Jellyfish extends Swimmable {
     /**
      * A function that draws the jellyfish on the screen.
      */
-    public void drawAnimal(Graphics g)
+    public void drawCreature(Graphics g)
     {
         int numLegs;
         if(size<40)
