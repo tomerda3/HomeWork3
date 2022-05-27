@@ -214,9 +214,9 @@ public class AquaPanel extends JPanel implements ActionListener {
                 Immobile im;
                 if (plants_count < 5) {
                     if (Objects.equals(dialog.getPlant_Type(), "Laminaria"))
-                        im = new Laminaria(dialog.getX_location(), 10, dialog.getPlantSize());
+                        im = new Laminaria(dialog.getX_location(), 50, dialog.getPlantSize());
                     else
-                        im = new Zostera(dialog.getX_location(), 10, dialog.getPlantSize());
+                        im = new Zostera(dialog.getX_location(), 50, dialog.getPlantSize());
                     plants.add(im);
                     plants_count++;
                 }
@@ -243,7 +243,7 @@ public class AquaPanel extends JPanel implements ActionListener {
             g.drawImage(image, 0, 0, d.width, d.height, this);
         }
 
-        if (animals.size()>0){
+        if (animals.size() > 0) {
             for(Swimmable s:animals){
                 s.drawCreature(g);
             }
@@ -252,7 +252,7 @@ public class AquaPanel extends JPanel implements ActionListener {
         if (Swimmable.foodFlag)
             Worm.getInstance().draw(g);
 
-        if(plants_count > 0)
+        if(plants.size() > 0)
             for(Immobile im:plants){
                 im.drawCreature(g);
             }
