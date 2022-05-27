@@ -25,7 +25,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     protected int verSpeed;
     protected final int DISTANCE_EAT = 4;
     protected int size;
-    protected final int col;
+    protected int col;
     protected int eatCount;
     protected int x_front;
     protected int y_front;
@@ -137,13 +137,14 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     public void setBarrierSync(CyclicBarrier toSet){
         barrierSync = toSet;
     }
+
     /**
      * A function that causes the animal to start swimming in the aquarium.
      */
     @Override
     public void run() {
         boolean flag_x = true, flag_y = true, didnt_move_X = false;
-        int width = 936, height = 440;
+        int width = 936, height = 640;
         while (true) {
             if (waitflag) {
                 synchronized (this) {
@@ -295,6 +296,34 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
      */
     public static void setFoodFlag(boolean flag) {
         foodFlag = flag;
+    }
+
+    public void setHorSpeed(int horSpeed) {
+        this.horSpeed = horSpeed;
+    }
+
+    public void setVerSpeed(int verSpeed) {
+        this.verSpeed = verSpeed;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void setX_front(int x_front) {
+        this.x_front = x_front;
+    }
+
+    public void setY_front(int y_front) {
+        this.y_front = y_front;
+    }
+
+    public void setAp(AquaPanel ap) {
+        this.ap = ap;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
     }
 
     public Object clone() {
