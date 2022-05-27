@@ -1,17 +1,15 @@
 package animals;
 
 public class AnimalFactory {
-
-    public Object produceSeaCreature(String type)
-    {
+    public static Object produceSeaCreature(String type) {
         Swimmable animal = null;
         switch (type)
         {
-            case "fish":
+            case "Fish":
                 animal = new Fish();
                 break;
 
-            case "jellyfish":
+            case "Jellyfish":
                 animal = new Jellyfish();
                 break;
 
