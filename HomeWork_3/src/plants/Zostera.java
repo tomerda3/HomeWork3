@@ -8,11 +8,11 @@ public class Zostera extends Immobile {
     int y;
     int size;
 
-    public Zostera(int x, int y,int size){
-        super(x, y,size);
-    }
     public Zostera(){
         super(50, 50,30);
+    }
+    public Zostera(int x, int y,int size){
+        super(x, y,size);
     }
 
     public  void drawCreature(Graphics g){
