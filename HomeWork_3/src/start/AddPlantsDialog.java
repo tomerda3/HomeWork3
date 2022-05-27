@@ -76,7 +76,7 @@ public class AddPlantsDialog extends JDialog implements ActionListener {
         p2.add(jlabelSize);
         p2.add(sliderSize);
 
-        sliderX_location = new JSlider(JSlider.HORIZONTAL,50, 700, 375);
+        sliderX_location = new JSlider(JSlider.HORIZONTAL,50, 900, 475);
         sliderX_location.setPaintTicks(true);
         sliderX_location.setMinorTickSpacing(25);
         sliderX_location.setPaintTrack(true);
