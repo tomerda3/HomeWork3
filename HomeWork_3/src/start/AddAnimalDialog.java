@@ -64,7 +64,7 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
         setLocation(450, 150);
 
         JPanel p1 = new JPanel();
-        JLabel jlabeltext = new JLabel("Select Animal");
+        JLabel jlabeltext = new JLabel("Select Animal:");
         BorderLayout myBorderLayout = new BorderLayout();
         myBorderLayout.setHgap(20);
         myBorderLayout.setVgap(20);
