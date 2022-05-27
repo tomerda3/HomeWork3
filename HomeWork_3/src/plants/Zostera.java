@@ -3,11 +3,6 @@ package plants;
 import java.awt.*;
 
 public class Zostera extends Immobile {
-
-    int x;
-    int y;
-    int size;
-
     public Zostera(){
         super(50, 50,30);
     }
@@ -15,8 +10,7 @@ public class Zostera extends Immobile {
         super(x, y,size);
     }
 
-    public  void drawCreature(Graphics g){
-
+    public void drawCreature(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(3));
         g2.setColor(Color.green);
