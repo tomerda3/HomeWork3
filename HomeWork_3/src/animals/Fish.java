@@ -14,6 +14,9 @@ public class Fish extends Swimmable {
     public Fish(int size, int x_front, int y_front, int horSpeed, int verSpeed, int col, AquaPanel ap) {
         super(size, x_front, y_front, horSpeed, verSpeed, col, ap);
     }
+    public Fish() {
+        super(30, 30, 30, 10, 10, 2, null);
+    }
 
     /**
      * A function that returns the class name "Fish".
@@ -26,7 +29,7 @@ public class Fish extends Swimmable {
     /**
      * A function that draws the fish on the screen.
      */
-    public void drawAnimal(Graphics g) {
+    public void drawCreature(Graphics g) {
         Color[] colors = {Color.black, Color.red, Color.blue, Color.green, Color.cyan, Color.orange, Color.yellow, Color.magenta, Color.pink};
         Color col = colors[this.col-1];
 
