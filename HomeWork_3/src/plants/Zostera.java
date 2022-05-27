@@ -4,10 +4,10 @@ import java.awt.*;
 
 public class Zostera extends Immobile {
     public Zostera(){
-        super(50, 50,30);
+        super(50, 30);
     }
     public Zostera(int x, int y,int size){
-        super(x, y,size);
+        super(x, size);
     }
 
     public void drawCreature(Graphics g){
