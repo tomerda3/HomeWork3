@@ -1,6 +1,8 @@
 package start;
 
 import animals.*;
+import plants.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,16 +23,17 @@ public class AquaPanel extends JPanel implements ActionListener {
     public JPanel buttonPanel, drawingPanel;
     JTable infoTable;
     JScrollPane scrollPane;
-    private final JButton addAnimalButtons, sleepButtons, wakeupButtons, resetButtons, foodButtons, infoButtons;
+    private final JButton addAnimalButtons, sleepButtons, wakeupButtons, resetButtons, foodButtons, infoButtons, AddPlantsDialog, duplicateButtons;
     public JButton exitButtons;
     HashSet<Swimmable> animals;
     int sumCountEat = 0;
     public boolean isSetImage = false;
-//    private final Worm worm = null;
     int animals_count = 0;
     String[] columnNames = {"Animal", "Color", "Size", "Hor. speed", "Ver. speed", "Eat counter"};
     Object[][] data = new Object[6][6];
     private Image image;
+    HashSet<Immobile> plants;
+    int plants_count = 0;
 
     /**
      * constructor
@@ -44,6 +47,8 @@ public class AquaPanel extends JPanel implements ActionListener {
         foodButtons = new JButton("Food");
         infoButtons = new JButton("Info");
         exitButtons = new JButton("Exit");
+        AddPlantsDialog = new JButton("Add Plant");
+        duplicateButtons = new JButton("Duplicate");
         buttonPanel = new JPanel();
         drawingPanel = new JPanel();
 
@@ -52,13 +57,15 @@ public class AquaPanel extends JPanel implements ActionListener {
         add(drawingPanel,BorderLayout.NORTH);
         add(buttonPanel,BorderLayout.SOUTH);
 
-        buttonPanel.setLayout(new GridLayout(1,7));
+        buttonPanel.setLayout(new GridLayout(1,9));
         buttonPanel.add(addAnimalButtons);
         buttonPanel.add(sleepButtons);
         buttonPanel.add(wakeupButtons);
         buttonPanel.add(resetButtons);
         buttonPanel.add(foodButtons);
         buttonPanel.add(infoButtons);
+        buttonPanel.add(AddPlantsDialog);
+        buttonPanel.add(duplicateButtons);
         buttonPanel.add(exitButtons);
 
         addAnimalButtons.addActionListener(this);
@@ -68,8 +75,11 @@ public class AquaPanel extends JPanel implements ActionListener {
         foodButtons.addActionListener(this);
         infoButtons.addActionListener(this);
         exitButtons.addActionListener(this);
+        AddPlantsDialog.addActionListener(this);
+        duplicateButtons.addActionListener(this);
 
         animals = new HashSet<>();
+        plants = new HashSet<>();
 
         infoTable = new JTable(data, columnNames);
         scrollPane = new JScrollPane(infoTable);
@@ -106,11 +116,9 @@ public class AquaPanel extends JPanel implements ActionListener {
                 if (animals_count < 5) {
                     if (Objects.equals(dialog.getAnimal_Type(), "Fish")){
                         s = new Fish(dialog.getAnimalSize(), getWidth() / 2, getHeight() / 2, dialog.gethSpeed(), dialog.getvSpeed(), dialog.getAnimalColor(), this);
-                        System.out.println("created fish");
                     }
                     else {
                         s = new Jellyfish(dialog.getAnimalSize(), getWidth() / 2, getHeight() / 2, dialog.gethSpeed(), dialog.getvSpeed(), dialog.getAnimalColor(), this);
-                        System.out.println("created jellyfish");
                     }
 
                     data[animals_count] = new Object[]{s.getAnimalName(), s.getColor(), s.getSize(), s.getHorSpeed(), s.getVerSpeed(), s.getEatCount()};
@@ -194,6 +202,34 @@ public class AquaPanel extends JPanel implements ActionListener {
         else if (e.getSource() == exitButtons) {
             System.exit(0);
         }
+        else if (e.getSource() == AddPlantsDialog) {
+            Window parentWindow = SwingUtilities.windowForComponent(this);
+            JFrame parentFrame = null;
+            if (parentWindow instanceof JFrame) {
+                parentFrame = (JFrame)parentWindow;
+            }
+
+            AddPlantsDialog dialog = new AddPlantsDialog(parentFrame, "Add Plant", true);
+            dialog.setVisible(true);
+
+            if (dialog.getPlantSize() != 0) {
+                Immobile im;
+                if (plants_count < 5) {
+                    if (Objects.equals(dialog.getPlant_Type(), "Laminaria")){
+                        im = new Laminaria(dialog.getX_location(), 10, dialog.getPlantSize());
+                    }
+                    else {
+                        im = new Zostera(dialog.getX_location(), 10, dialog.getPlantSize());
+                    }
+                    plants.add(im);
+                    plants_count++;
+                }
+            }
+        }
+        else if (e.getSource() == duplicateButtons) {
+            //----------------
+
+        }
     }
     /**
      * This function is acount on any graphic interface on the program
@@ -213,12 +249,17 @@ public class AquaPanel extends JPanel implements ActionListener {
 
         if (animals.size()>0){
             for(Swimmable s:animals){
-                s.drawAnimal(g);
+                s.drawCreature(g);
             }
         }
 
         if (Swimmable.foodFlag)
             Worm.getInstance().draw(g);
+
+        if(plants_count > 0)
+            for(Immobile im:plants){
+                im.drawCreature(g);
+            }
 
         getParent().repaint();
     }
