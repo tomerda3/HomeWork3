@@ -90,7 +90,7 @@ public class AquaFrame extends JFrame implements ActionListener{
         if (e.getSource() == jmenuitemHelp) {
 //            JDialog dlgAbout = new CustomHELPDialog(this, "Message", true);
 //            dlgAbout.setVisible(true);
-             new CustomHELPDialog();
+             new CustomHELPDialog("Home Work 2\nGUI @ Threads.");
         }
         else if (e.getSource() == jmenuitemExit) {
             System.exit(0);
