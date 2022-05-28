@@ -107,7 +107,7 @@ public class AquaPanel extends JPanel implements ActionListener {
             if (parentWindow instanceof JFrame)
                 parentFrame = (JFrame)parentWindow;
 
-            AddAnimalDialog dialog = new AddAnimalDialog(parentFrame, "Add Animal", true);
+            AddAnimalDialog dialog = new AddAnimalDialog(parentFrame, "Add Animal", true, false, 0);
             dialog.setVisible(true);
 
             if (dialog.getAnimalSize() != 0) {
@@ -128,6 +128,7 @@ public class AquaPanel extends JPanel implements ActionListener {
                     s.setAp(this);
                     data[animals_count] = new Object[]{s.getAnimalName(), s.getColor(), s.getSize(), s.getHorSpeed(), s.getVerSpeed(), s.getEatCount()};
                     animals_count++;
+                    s.setId(animals_count);
                     animals.add(s);
                     // start the object thread run.
                     s.start();
@@ -234,8 +235,56 @@ public class AquaPanel extends JPanel implements ActionListener {
             }
         }
         else if (e.getSource() == duplicateButtons) {
-            //----------------
+            if(animals_count > 0) {
+                Window parentWindow = SwingUtilities.windowForComponent(this);
+                JFrame parentFrame = null;
+                if (parentWindow instanceof JFrame)
+                    parentFrame = (JFrame) parentWindow;
 
+                AddAnimalDialog dialog = new AddAnimalDialog(parentFrame, "Duplicate Animal", true, true, animals_count);
+                dialog.setVisible(true);
+
+                if (dialog.getAnimalSize() != 0) {
+                    Swimmable s = null;
+                    if (animals_count < 5) {
+                        animals_count++;
+                        if(dialog.getSame()) {
+                            //Swimmable s_dup;
+                            for(Swimmable sw:animals){
+                                if (sw.getID() == dialog.getChoose()) {
+                                    //s_dup = sw.clone();
+                                    if (Objects.equals(sw.getAnimalName(), "Fish"))
+                                        s = (Fish) sw.clone();
+                                    else
+                                        s = (Jellyfish) sw.clone();
+                                    data[animals_count] = new Object[]{s.getAnimalName(), s.getColor(), s.getSize(), s.getHorSpeed(), s.getVerSpeed(), s.getEatCount()};
+                                    s.setId(animals_count);
+                                    animals.add(s);
+                                    s.start();
+                                    break;
+                                }
+                            }
+                        }
+                        else {
+                            if (Objects.equals(dialog.getAnimal_Type(), "Fish"))
+                                s = (Fish) AnimalFactory.produceSeaCreature("Fish");
+                            else
+                                s = (Jellyfish) AnimalFactory.produceSeaCreature("Jellyfish");
+                            s.setSize(dialog.getAnimalSize());
+                            s.setX_front(getWidth() / 2);
+                            s.setY_front(getHeight() / 2);
+                            s.setHorSpeed(dialog.gethSpeed());
+                            s.setVerSpeed(dialog.getvSpeed());
+                            s.setCol(dialog.getAnimalColor());
+                            s.setAp(this);
+                            data[animals_count] = new Object[]{s.getAnimalName(), s.getColor(), s.getSize(), s.getHorSpeed(), s.getVerSpeed(), s.getEatCount()};
+                            s.setId(animals_count);
+                            animals.add(s);
+                            s.start();
+                        }
+                    }
+                }
+            }
         }
     }
     /**
