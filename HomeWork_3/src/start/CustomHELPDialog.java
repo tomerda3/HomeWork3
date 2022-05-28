@@ -12,8 +12,8 @@ public class CustomHELPDialog {
      * constructor
      * here we build the JDialog that present all the information we want too..
      */
-    CustomHELPDialog(){
+    public CustomHELPDialog(String msg){
         f=new JFrame();
-        JOptionPane.showMessageDialog(f,"Home Work 2\nGUI @ Threads.");
+        JOptionPane.showMessageDialog(f,msg);
     }
 }
