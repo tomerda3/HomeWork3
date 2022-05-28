@@ -1,10 +1,10 @@
 package animals;
 
 import start.AquaPanel;
+import start.CustomHELPDialog;
 import start.SeaCreature;
 
 import java.awt.*;
-import java.util.Objects;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
@@ -34,6 +34,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     public static boolean foodFlag = false;
     protected AquaPanel ap;
     protected CyclicBarrier barrierSync;
+    protected int id;
 
     /**
      * A constructor who gets the following data of the animal:
@@ -156,6 +157,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                 }
             }
             if (foodFlag) {
+                new CustomHELPDialog("I'm " + getID() + " and I'm hungry");
                 try {
                     if(barrierSync != null)
                         barrierSync.await();
@@ -326,14 +328,23 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
         this.col = col;
     }
 
-    public Object clone() {
-        Object clone = null;
-        try {
-            clone = super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return clone;
+//    public Object clone() {
+//        Object clone = null;
+//        try {
+//            clone = super.clone();
+//        } catch (CloneNotSupportedException e) {
+//            e.printStackTrace();
+//        }
+//        return clone;
+//    }
+    public abstract Swimmable clone();
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getID() {
+        return id;
     }
 
     @Override
