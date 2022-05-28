@@ -29,8 +29,7 @@ public class Jellyfish extends Swimmable {
     /**
      * A function that draws the jellyfish on the screen.
      */
-    public void drawCreature(Graphics g)
-    {
+    public void drawCreature(Graphics g) {
         int numLegs;
         if(size<40)
             numLegs = 5;
@@ -47,5 +46,9 @@ public class Jellyfish extends Swimmable {
 
         for(int i=0; i<numLegs; i++)
             g.drawLine(x_front - size/2 + size/numLegs + size*i/(numLegs+1), y_front, x_front - size/2 + size/numLegs + size*i/(numLegs+1), y_front+size/3);
+    }
+
+    public Swimmable clone() {
+        return new Jellyfish(size, x_front, y_front, horSpeed, verSpeed, col, ap);
     }
 }
