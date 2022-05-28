@@ -8,7 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class AddAnimalDialog extends JDialog implements ActionListener {
-    JButton jbnAdd;
+    JButton jbnAdd, jbnDup;
     private final JRadioButton radioFish;
     private final JComboBox<String> comboColor;
     String[] colors = {"Black", "Red", "Blue", "Green", "Cyan", "Orange", "Yellow", "Magenta", "Pink"};
@@ -18,48 +18,14 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
     ButtonGroup buttonGroup;
     public String animal_Type;
     private int animalSize, vSpeed, hSpeed, animalColor;
+    private boolean is_Duplicate;
+    private int amount_Animal;
+    private final JComboBox<String> comboAmount;
+    private int choose;
+    private boolean same = false;
 
-    /**
-     * A function that returns the type of the animal.
-     * @return the type in String.
-     */
-    public String getAnimal_Type() {
-        return animal_Type;
-    }
 
-    /**
-     * A function that returns the color of the animal according to an array of colors.
-     * @return the color in string.
-     */
-    public int getAnimalColor() {
-        return (animalColor+1);
-    }
-
-    /**
-     * A function that returns the size of the animal.
-     * @return the size in int.
-     */
-    public int getAnimalSize() {
-        return animalSize;
-    }
-
-    /**
-     * A function that returns the horizontal velocity of the animal.
-     * @return the horSpeed in int.
-     */
-    public int gethSpeed() {
-        return hSpeed;
-    }
-
-    /**
-     * A function that returns the vertical velocity of the animal.
-     * @return the verSpeed in int.
-     */
-    public int getvSpeed() {
-        return vSpeed;
-    }
-
-    AddAnimalDialog(JFrame parent, String title, boolean modal){
+    AddAnimalDialog(JFrame parent, String title, boolean modal, boolean is_Duplicate, int amount_Animal) {
         super(parent, title, modal);
         setLocation(450, 150);
 
@@ -114,16 +80,38 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
         p2.add(jlabelVspeed);
         p2.add(sliderVESpeed);
 
-        comboColor = new JComboBox<>(colors);
         JPanel p3 = new JPanel();
-        p3.add(comboColor);
+        comboColor = new JComboBox<>(colors);
+        if(is_Duplicate && amount_Animal > 0) {
+            p3.setLayout(new GridLayout(3, 1,20,20));
+            p3.add(comboColor);
+            String[] count = new String[amount_Animal];
+            for (int i = 1; i <= amount_Animal; i++)
+                count[i-1] = String.valueOf(i);
+            comboAmount = new JComboBox<>(count);
+            p3.add(comboAmount);
+        }
+        else {
+            comboAmount = new JComboBox<>();
+            p3.add(comboColor);
+        }
 
         JPanel p4 = new JPanel();
-        jbnAdd = new JButton("Add");
+        if(is_Duplicate && amount_Animal > 0) {
+            p4.setLayout(new GridLayout(1, 2,20,20));
+            jbnAdd = new JButton("Duplicate By vales");
+            jbnDup = new JButton("Duplicate Same");
+            p4.add(jbnAdd);
+            p4.add(jbnDup);
+            jbnDup.addActionListener(this);
+        }
+        else {
+            jbnAdd = new JButton("Add");
+            p4.add(jbnAdd);
+        }
         jbnAdd.addActionListener(this);
-        p4.add(jbnAdd);
-        BorderLayout myBorderLayout1 = new BorderLayout();
 
+        BorderLayout myBorderLayout1 = new BorderLayout();
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(myBorderLayout1);
         mainPanel.add(p1,BorderLayout.NORTH);
@@ -145,12 +133,61 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
     }
 
     /**
+     * A function that returns the type of the animal.
+     * @return the type in String.
+     */
+    public String getAnimal_Type() {
+        return animal_Type;
+    }
+
+    /**
+     * A function that returns the color of the animal according to an array of colors.
+     * @return the color in string.
+     */
+    public int getAnimalColor() {
+        return (animalColor+1);
+    }
+
+    /**
+     * A function that returns the size of the animal.
+     * @return the size in int.
+     */
+    public int getAnimalSize() {
+        return animalSize;
+    }
+
+    /**
+     * A function that returns the horizontal velocity of the animal.
+     * @return the horSpeed in int.
+     */
+    public int gethSpeed() {
+        return hSpeed;
+    }
+
+    /**
+     * A function that returns the vertical velocity of the animal.
+     * @return the verSpeed in int.
+     */
+    public int getvSpeed() {
+        return vSpeed;
+    }
+
+    public int getChoose() {
+        return choose;
+    }
+
+    public boolean getSame() {
+        return same;
+    }
+
+    /**
      * A function that fills in the animal's data following a click on the "Add" button.
      * @param e - Represents the push of a button.
      */
     public void actionPerformed(ActionEvent e)
     {
         if(e.getSource() == jbnAdd)	{
+            same = false;
             if (radioFish.isSelected())
                 animal_Type = "Fish";
             else
@@ -159,6 +196,14 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
             vSpeed = sliderVESpeed.getValue();
             hSpeed = sliderHSpeed.getValue();
             animalColor = comboColor.getSelectedIndex();
+            if(is_Duplicate && amount_Animal > 0)
+                choose = comboAmount.getSelectedIndex();
+            this.dispose();
+        }
+
+        if(e.getSource() == jbnDup) {
+            animalSize = 1;
+            same = true;
             this.dispose();
         }
     }
