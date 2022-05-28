@@ -87,4 +87,8 @@ public class Fish extends Swimmable {
             g2.setStroke(new BasicStroke(1));
         }
     }
+
+    public Swimmable clone() {
+        return new Fish(size, x_front, y_front, horSpeed, verSpeed, col, ap);
+    }
 }
