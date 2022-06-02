@@ -11,11 +11,11 @@ public class Fish extends Swimmable {
     /**
      * A constructor who gets the following data of the fish (like his super class) and send them to his super class.
      */
-    public Fish(int size, int x_front, int y_front, int horSpeed, int verSpeed, int col, AquaPanel ap) {
-        super(size, x_front, y_front, horSpeed, verSpeed, col, ap);
+    public Fish(int size, int x_front, int y_front, int horSpeed, int verSpeed, int col, AquaPanel ap, int freq) {
+        super(size, x_front, y_front, horSpeed, verSpeed, col, ap,freq);
     }
     public Fish() {
-        super(30, 30, 30, 10, 10, 2, null);
+        super(30, 30, 30, 10, 10, 2, null,0);
     }
 
     /**
@@ -89,6 +89,6 @@ public class Fish extends Swimmable {
     }
 
     public Swimmable clone() {
-        return new Fish(size, x_front, y_front, horSpeed, verSpeed, col, ap);
+        return new Fish(size, x_front, y_front, horSpeed, verSpeed, col, ap,eatingFreq);
     }
 }
