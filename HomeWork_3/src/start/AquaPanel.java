@@ -125,6 +125,7 @@ public class AquaPanel extends JPanel implements ActionListener {
                     s.setHorSpeed(dialog.gethSpeed());
                     s.setVerSpeed(dialog.getvSpeed());
                     s.setCol(dialog.getAnimalColor());
+                    s.setFreq(dialog.getEatingFreq());
                     s.setAp(this);
                     data[animals_count] = new Object[]{s.getAnimalName(), s.getColor(), s.getSize(), s.getHorSpeed(), s.getVerSpeed(), s.getEatCount()};
                     animals_count++;
@@ -247,10 +248,10 @@ public class AquaPanel extends JPanel implements ActionListener {
                 if (dialog.getAnimalSize() != 0) {
                     Swimmable s = null;
                     if (animals_count < 5) {
-                        animals_count++;
                         if(dialog.getSame()) {
                             //Swimmable s_dup;
                             for(Swimmable sw:animals){
+
                                 if (sw.getID() == dialog.getChoose()) {
                                     //s_dup = sw.clone();
                                     if (Objects.equals(sw.getAnimalName(), "Fish"))
@@ -258,6 +259,7 @@ public class AquaPanel extends JPanel implements ActionListener {
                                     else
                                         s = (Jellyfish) sw.clone();
                                     data[animals_count] = new Object[]{s.getAnimalName(), s.getColor(), s.getSize(), s.getHorSpeed(), s.getVerSpeed(), s.getEatCount()};
+                                    animals_count++;
                                     s.setId(animals_count);
                                     animals.add(s);
                                     s.start();
@@ -276,8 +278,10 @@ public class AquaPanel extends JPanel implements ActionListener {
                             s.setHorSpeed(dialog.gethSpeed());
                             s.setVerSpeed(dialog.getvSpeed());
                             s.setCol(dialog.getAnimalColor());
+                            s.setFreq(dialog.getEatingFreq());
                             s.setAp(this);
                             data[animals_count] = new Object[]{s.getAnimalName(), s.getColor(), s.getSize(), s.getHorSpeed(), s.getVerSpeed(), s.getEatCount()};
+                            animals_count++;
                             s.setId(animals_count);
                             animals.add(s);
                             s.start();
