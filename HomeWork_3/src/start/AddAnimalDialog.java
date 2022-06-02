@@ -15,6 +15,7 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
     private final JSlider sliderSize;
     private final JSlider sliderHSpeed;
     private final JSlider sliderVESpeed;
+    private final JSlider sliderFreq;
     ButtonGroup buttonGroup;
     public String animal_Type;
     private int animalSize, vSpeed, hSpeed, animalColor;
@@ -23,7 +24,7 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
     private final JComboBox<String> comboAmount;
     private int choose;
     private boolean same = false;
-
+    private int eatingFreq;
 
     AddAnimalDialog(JFrame parent, String title, boolean modal, boolean is_Duplicate, int amount_Animal) {
         super(parent, title, modal);
@@ -48,10 +49,12 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
         p1.add(radioJellyfish,BorderLayout.WEST);
 
         JPanel p2 = new JPanel();
-        p2.setLayout(new GridLayout(6, 1,20,20));
+        p2.setLayout(new GridLayout(8, 1,20,20));
         JLabel jlabelSize = new JLabel("Size");
         JLabel jlabelHspeed = new JLabel("Horizontal Speed");
         JLabel jlabelVspeed = new JLabel("Vertical Speed");
+        JLabel jlabelFreq = new JLabel("Eating Frequency");
+
 
         sliderSize = new JSlider(JSlider.HORIZONTAL,20, 320, 150);
         sliderSize.setPaintTicks(true);
@@ -79,6 +82,15 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
         sliderVESpeed.setPaintLabels(true);
         p2.add(jlabelVspeed);
         p2.add(sliderVESpeed);
+
+        sliderFreq = new JSlider(JSlider.HORIZONTAL,5, 15, 10);
+        sliderFreq.setPaintTicks(true);
+        sliderFreq.setMinorTickSpacing(1);
+        sliderFreq.setPaintTrack(true);
+        sliderFreq.setMajorTickSpacing(5);
+        sliderFreq.setPaintLabels(true);
+        p2.add(jlabelFreq);
+        p2.add(sliderFreq);
 
         JPanel p3 = new JPanel();
         comboColor = new JComboBox<>(colors);
@@ -180,6 +192,10 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
         return same;
     }
 
+    public int getEatingFreq() {
+        return eatingFreq;
+    }
+
     /**
      * A function that fills in the animal's data following a click on the "Add" button.
      * @param e - Represents the push of a button.
@@ -195,6 +211,7 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
             animalSize = sliderSize.getValue();
             vSpeed = sliderVESpeed.getValue();
             hSpeed = sliderHSpeed.getValue();
+            eatingFreq = sliderFreq.getValue();
             animalColor = comboColor.getSelectedIndex();
             if(is_Duplicate && amount_Animal > 0)
                 choose = comboAmount.getSelectedIndex();
@@ -202,6 +219,7 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
         }
 
         if(e.getSource() == jbnDup) {
+            choose = (comboAmount.getSelectedIndex()+1);
             animalSize = 1;
             same = true;
             this.dispose();
