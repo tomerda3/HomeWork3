@@ -35,6 +35,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     protected AquaPanel ap;
     protected CyclicBarrier barrierSync;
     protected int id;
+    protected int eatingFreq;
 
     /**
      * A constructor who gets the following data of the animal:
@@ -46,7 +47,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
      * @param x_front - Represents the position of the animal on the X-axis
      * @param y_front - Represents the position of the animal on the Y-axis
      */
-    public Swimmable(int size, int x_front, int y_front, int horSpeed, int verSpeed, int col, AquaPanel ap) {
+    public Swimmable(int size, int x_front, int y_front, int horSpeed, int verSpeed, int col, AquaPanel ap, int eatingFreq) {
         this.horSpeed = horSpeed;
         this.verSpeed = verSpeed;
         this.ap  = ap;
@@ -55,6 +56,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
         this.x_front = x_front;
         this.y_front = y_front;
         barrierSync = null;
+        this.eatingFreq = eatingFreq;
     }
 
     /**
@@ -132,6 +134,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
             notify();
         }
     }
+
     /**
      * A function that set the barrier.
      */
@@ -146,6 +149,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     public void run() {
         boolean flag_x = true, flag_y = true, didnt_move_X = false;
         int width = 936, height = 640;
+        int countfreq =0;
         while (true) {
             if (waitflag) {
                 synchronized (this) {
@@ -156,8 +160,8 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                     }
                 }
             }
+
             if (foodFlag) {
-                new CustomHELPDialog("I'm " + getID() + " and I'm hungry");
                 try {
                     if(barrierSync != null)
                         barrierSync.await();
@@ -207,11 +211,17 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                         }
                     }
                     else {
+                        countfreq = 0;
                         setFoodFlag(false);
                         eatInc();
                         ap.setInfo();
                     }
                 }
+            }
+            System.out.println("countfreq: "+countfreq);
+            if (countfreq == eatingFreq){
+                new CustomHELPDialog("I'm " + getID() + " and I'm hungry");
+                countfreq =0;
             }
 
             while (flag_x && flag_y && !waitflag && !foodFlag) {
@@ -224,12 +234,15 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                     return;
                 }
                 if (x_front + size/10 >= width && y_front + size/10 >= height) {
+                    countfreq++;
                     flag_x = false;
                     flag_y = false;
                 }
-                if (x_front + size/10 >= width)
+                else if (x_front + size/10 >= width){
+                    countfreq++;
                     flag_x = false;
-                if (y_front + size/10 >= height)
+                }
+                else if (y_front + size/10 >= height)
                     flag_y = false;
             }
 
@@ -243,12 +256,16 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                     return;
                 }
                 if (x_front + size/10 >= width && y_front - size/10 <= 0) {
+                    countfreq++;
                     flag_x = false;
                     flag_y = true;
                 }
-                if (x_front + size/10 >= width)
+                else if (x_front + size/10 >= width){
+                    countfreq++;
                     flag_x = false;
-                if (y_front - size/10 <= 0)
+                }
+
+                else if (y_front - size/10 <= 0)
                     flag_y = true;
             }
 
@@ -262,12 +279,15 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                     return;
                 }
                 if (x_front - size/10 <= 0 && y_front + size/10 >= height) {
+                    countfreq++;
                     flag_x = true;
                     flag_y = false;
                 }
-                if (x_front - size/10 <= 0)
+                else if (x_front - size/10 <= 0){
+                    countfreq++;
                     flag_x = true;
-                if (y_front + size/4 >= height)
+                }
+                else if (y_front + size/4 >= height)
                     flag_y = false;
             }
 
@@ -281,12 +301,15 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                     return;
                 }
                 if (x_front - size/10 <= 0 && y_front - size/10 <= 0) {
+                    countfreq++;
                     flag_x = true;
                     flag_y = true;
                 }
-                if (x_front - size/10 <= 0)
+                else if (x_front - size/10 <= 0){
+                    countfreq++;
                     flag_x = true;
-                if (y_front - size/10 <= 0)
+                }
+                else if (y_front - size/10 <= 0)
                     flag_y = true;
             }
         }
@@ -326,6 +349,10 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
 
     public void setCol(int col) {
         this.col = col;
+    }
+
+    public void setFreq(int freq) {
+        this.eatingFreq = freq;
     }
 
 //    public Object clone() {
