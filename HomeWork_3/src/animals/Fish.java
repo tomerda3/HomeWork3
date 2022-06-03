@@ -31,7 +31,11 @@ public class Fish extends Swimmable {
      */
     public void drawCreature(Graphics g) {
         Color[] colors = {Color.black, Color.red, Color.blue, Color.green, Color.cyan, Color.orange, Color.yellow, Color.magenta, Color.pink};
-        Color col = colors[this.col-1];
+        Color col;
+        if (c == null)
+            col = colors[this.col-1];
+        else
+            col = c;
 
         g.setColor(col);
         if(x_dir==1) // fish swims to right side
