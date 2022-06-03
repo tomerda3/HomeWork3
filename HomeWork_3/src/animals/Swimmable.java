@@ -36,6 +36,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     protected CyclicBarrier barrierSync;
     protected int id;
     protected int eatingFreq;
+    protected Color c = null;
 
     /**
      * A constructor who gets the following data of the animal:
@@ -64,6 +65,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
      */
     public abstract String getAnimalName();
     public abstract void drawCreature(Graphics g);
+    public abstract Swimmable clone();
 
     /**
      * A function that returns the horizontal velocity of the animal.
@@ -148,7 +150,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     @Override
     public void run() {
         boolean flag_x = true, flag_y = true, didnt_move_X = false;
-        int width = 936, height = 640;
+        int width = 986, height = 640;
         int countfreq =0;
         while (true) {
             if (waitflag) {
@@ -218,10 +220,10 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                     }
                 }
             }
-            System.out.println("countfreq: "+countfreq);
-            if (countfreq == eatingFreq){
+
+            if (countfreq == eatingFreq) {
                 new CustomHELPDialog("I'm " + getID() + " and I'm hungry");
-                countfreq =0;
+                countfreq = 0;
             }
 
             while (flag_x && flag_y && !waitflag && !foodFlag) {
@@ -355,17 +357,6 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
         this.eatingFreq = freq;
     }
 
-//    public Object clone() {
-//        Object clone = null;
-//        try {
-//            clone = super.clone();
-//        } catch (CloneNotSupportedException e) {
-//            e.printStackTrace();
-//        }
-//        return clone;
-//    }
-    public abstract Swimmable clone();
-
     public void setId(int id) {
         this.id = id;
     }
@@ -374,16 +365,10 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
         return id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Swimmable swimmable = (Swimmable) o;
-        return horSpeed == swimmable.horSpeed && verSpeed == swimmable.verSpeed && DISTANCE_EAT == swimmable.DISTANCE_EAT && size == swimmable.size && col == swimmable.col && eatCount == swimmable.eatCount && x_front == swimmable.x_front && y_front == swimmable.y_front && x_dir == swimmable.x_dir && waitflag == swimmable.waitflag && ap.equals(swimmable.ap) && barrierSync.equals(swimmable.barrierSync);
+    public void PaintFish(Color c) {
+        this.c = c;
     }
 
-    public void PaintFish(int changeColor) {
-        this.col= changeColor;
-    }
+
 }
 
