@@ -39,7 +39,11 @@ public class Jellyfish extends Swimmable {
             numLegs = 12;
 
         Color[] colors = {Color.black, Color.red, Color.blue, Color.green, Color.cyan, Color.orange, Color.yellow, Color.magenta, Color.pink};
-        Color col = colors[this.col-1];
+        Color col;
+        if (c == null)
+            col = colors[this.col-1];
+        else
+            col = c;
 
         g.setColor(col);
         g.fillArc(x_front - size/2, y_front - size/4, size, size/2, 0, 180);
