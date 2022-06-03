@@ -23,17 +23,14 @@ public class AquaPanel extends JPanel implements ActionListener {
     public JPanel buttonPanel, drawingPanel;
     JTable infoTable;
     JScrollPane scrollPane;
-    private final JButton addAnimalButtons, sleepButtons, wakeupButtons, resetButtons, foodButtons, infoButtons, AddPlantsDialog, duplicateButtons, DecoratorButtons;
-    public JButton exitButtons;
+    public final JButton addAnimalButtons, sleepButtons, wakeupButtons, resetButtons, foodButtons, infoButtons, exitButtons, addPlantsDialog, duplicateButtons, decoratorButtons;
     HashSet<Swimmable> animals;
-    int sumCountEat = 0;
+    int sum_count_eat = 0, animals_count = 0, plants_count = 0;
     public boolean isSetImage = false;
-    int animals_count = 0;
     String[] columnNames = {"Animal", "Color", "Size", "Hor. speed", "Ver. speed", "Eat counter"};
     Object[][] data = new Object[6][6];
     private Image image;
     HashSet<Immobile> plants;
-    int plants_count = 0;
 
     /**
      * constructor
@@ -47,9 +44,9 @@ public class AquaPanel extends JPanel implements ActionListener {
         foodButtons = new JButton("Food");
         infoButtons = new JButton("Info");
         exitButtons = new JButton("Exit");
-        DecoratorButtons = new JButton("Decorator");
-        AddPlantsDialog = new JButton("Add Plant");
+        addPlantsDialog = new JButton("Add Plant");
         duplicateButtons = new JButton("Duplicate");
+        decoratorButtons = new JButton("Decorator");
         buttonPanel = new JPanel();
         drawingPanel = new JPanel();
 
@@ -65,10 +62,10 @@ public class AquaPanel extends JPanel implements ActionListener {
         buttonPanel.add(resetButtons);
         buttonPanel.add(foodButtons);
         buttonPanel.add(infoButtons);
-        buttonPanel.add(AddPlantsDialog);
+        buttonPanel.add(addPlantsDialog);
         buttonPanel.add(duplicateButtons);
+        buttonPanel.add(decoratorButtons);
         buttonPanel.add(exitButtons);
-        buttonPanel.add(DecoratorButtons);
 
         addAnimalButtons.addActionListener(this);
         sleepButtons.addActionListener(this);
@@ -77,9 +74,9 @@ public class AquaPanel extends JPanel implements ActionListener {
         foodButtons.addActionListener(this);
         infoButtons.addActionListener(this);
         exitButtons.addActionListener(this);
-        AddPlantsDialog.addActionListener(this);
+        addPlantsDialog.addActionListener(this);
         duplicateButtons.addActionListener(this);
-        DecoratorButtons.addActionListener(this);
+        decoratorButtons.addActionListener(this);
 
         animals = new HashSet<>();
         plants = new HashSet<>();
@@ -87,7 +84,7 @@ public class AquaPanel extends JPanel implements ActionListener {
         infoTable = new JTable(data, columnNames);
         scrollPane = new JScrollPane(infoTable);
         data[5][0] = "Total";
-        data[5][5] = sumCountEat;
+        data[5][5] = sum_count_eat;
         scrollPane.setVisible(false);
         add(scrollPane, BorderLayout.CENTER);
 
@@ -174,8 +171,8 @@ public class AquaPanel extends JPanel implements ActionListener {
             data[2] = new Object[]{"", "", "", "", "", ""};
             data[3] = new Object[]{"", "", "", "", "", ""};
             data[4] = new Object[]{"", "", "", "", "", ""};
-            sumCountEat = 0;
-            data[5][5] = sumCountEat;
+            sum_count_eat = 0;
+            data[5][5] = sum_count_eat;
         }
         /**
          * This button is feed the animal with worm that add to the center of the screen.
@@ -213,7 +210,7 @@ public class AquaPanel extends JPanel implements ActionListener {
         else if (e.getSource() == exitButtons) {
             System.exit(0);
         }
-        else if (e.getSource() == AddPlantsDialog) {
+        else if (e.getSource() == addPlantsDialog) {
             Window parentWindow = SwingUtilities.windowForComponent(this);
             JFrame parentFrame = null;
             if (parentWindow instanceof JFrame)
@@ -252,11 +249,8 @@ public class AquaPanel extends JPanel implements ActionListener {
                     Swimmable s = null;
                     if (animals_count < 5) {
                         if(dialog.getSame()) {
-                            //Swimmable s_dup;
                             for(Swimmable sw:animals){
-
                                 if (sw.getID() == dialog.getChoose()) {
-                                    //s_dup = sw.clone();
                                     if (Objects.equals(sw.getAnimalName(), "Fish"))
                                         s = (Fish) sw.clone();
                                     else
@@ -293,16 +287,15 @@ public class AquaPanel extends JPanel implements ActionListener {
                 }
             }
         }
-        else if (e.getSource() == DecoratorButtons) {
-            Window parentWindow = SwingUtilities.windowForComponent(this);
-            JFrame parentFrame = null;
-            if (parentWindow instanceof JFrame)
-                parentFrame = (JFrame)parentWindow;
+        else if (e.getSource() == decoratorButtons) {
+            if(animals_count > 0) {
+                Window parentWindow = SwingUtilities.windowForComponent(this);
+                JFrame parentFrame = null;
+                if (parentWindow instanceof JFrame)
+                    parentFrame = (JFrame) parentWindow;
 
-            DecoratorDialog dialog = new DecoratorDialog(parentFrame, "Decorator", true, animals_count,data);
-            dialog.setVisible(true);
-
-            if (false) {
+                DecoratorDialog dialog = new DecoratorDialog(parentFrame, "Decorator", true, animals_count, data, this);
+                dialog.setVisible(true);
             }
         }
     }
@@ -359,7 +352,23 @@ public class AquaPanel extends JPanel implements ActionListener {
             }
             i++;
         }
-        sumCountEat++;
-        data[5][5] = sumCountEat;
+        sum_count_eat++;
+        data[5][5] = sum_count_eat;
     }
+
+    public void setColor(int id, Color c) {
+        int i = 0;
+        for(Swimmable sw:animals) {
+            if (sw.getID() == id) {
+                sw.PaintFish(c);
+                data[i][1] = getColorName(c);
+            }
+            i++;
+        }
+    }
+
+    public String getColorName(Color c) {
+        return "("+c.getRed()+","+c.getGreen()+","+c.getBlue()+")";
+    }
+
 }
