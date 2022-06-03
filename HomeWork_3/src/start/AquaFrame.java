@@ -30,7 +30,7 @@ public class AquaFrame extends JFrame implements ActionListener{
         frameAqua.setVisible(true);
     }
 
-    private final JMenuItem jmenuitemExit, jmenuitemHelp, jmenuitemImage, jmenuitemBlue, jmenuitemNone;
+    private final JMenuItem jmenuitemExit, jmenuitemHelp, jmenuitemImage, jmenuitemBlue, jmenuitemNone, jmenuitemSave, jmenuitemRestore;
     public AquaPanel panelAqua;
     public Image backImage;
     /**
@@ -49,6 +49,9 @@ public class AquaFrame extends JFrame implements ActionListener{
         jmenuitemImage = new JMenuItem("Image");
         jmenuitemBlue = new JMenuItem("Blue");
         jmenuitemNone = new JMenuItem("None");
+        JMenu jMenuMemento = new JMenu("Memento");
+        jmenuitemSave = new JMenuItem("Save");
+        jmenuitemRestore = new JMenuItem("Restore");
         panelAqua = new AquaPanel();
 
         add(panelAqua);
@@ -59,10 +62,14 @@ public class AquaFrame extends JFrame implements ActionListener{
         jMenuBackground.add(jmenuitemBlue);
         jMenuBackground.add(jmenuitemNone);
 
+        jMenuMemento.add(jmenuitemSave);
+        jMenuMemento.add(jmenuitemRestore);
+
         JMenuBar mb = new JMenuBar();
         mb.add(jmenuFile);
         mb.add(jMenuBackground);
         mb.add(jmenuHelp);
+        mb.add(jMenuMemento);
         setJMenuBar(mb);
 
         jmenuitemExit.addActionListener(this);
@@ -70,6 +77,8 @@ public class AquaFrame extends JFrame implements ActionListener{
         jmenuitemImage.addActionListener(this);
         jmenuitemBlue.addActionListener(this);
         jmenuitemNone.addActionListener(this);
+        jmenuitemSave.addActionListener(this);
+        jmenuitemRestore.addActionListener(this);
 
         addWindowListener(new WindowAdapter() {
 
@@ -88,8 +97,6 @@ public class AquaFrame extends JFrame implements ActionListener{
      */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jmenuitemHelp) {
-//            JDialog dlgAbout = new CustomHELPDialog(this, "Message", true);
-//            dlgAbout.setVisible(true);
              new CustomHELPDialog("Home Work 2\nGUI @ Threads.");
         }
         else if (e.getSource() == jmenuitemExit) {
@@ -110,10 +117,15 @@ public class AquaFrame extends JFrame implements ActionListener{
         }
         else if (e.getSource() == jmenuitemNone) {
             panelAqua.isSetImage = false;
-
             panelAqua.setBackground(Color.white);
         }
         else if (e.getSource() == panelAqua.exitButtons) {
+            System.exit(0);
+        }
+        else if (e.getSource() == jmenuitemSave) {
+            System.exit(0);
+        }
+        else if (e.getSource() == jmenuitemRestore) {
             System.exit(0);
         }
     }
