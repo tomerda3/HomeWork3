@@ -13,7 +13,7 @@ import java.util.concurrent.CyclicBarrier;
  * @see Fish
  * @see Jellyfish
  */
-public abstract class Swimmable extends Thread  implements SeaCreature, Cloneable{
+public abstract class Swimmable extends Thread  implements SeaCreature, Cloneable,MarineAnimal{
     /**
      * DISTANCE_EAT - Represents how much animal can eat.
      * eatCount - Represents the amount of food the animal ate, start from 0.
@@ -380,6 +380,10 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
         if (o == null || getClass() != o.getClass()) return false;
         Swimmable swimmable = (Swimmable) o;
         return horSpeed == swimmable.horSpeed && verSpeed == swimmable.verSpeed && DISTANCE_EAT == swimmable.DISTANCE_EAT && size == swimmable.size && col == swimmable.col && eatCount == swimmable.eatCount && x_front == swimmable.x_front && y_front == swimmable.y_front && x_dir == swimmable.x_dir && waitflag == swimmable.waitflag && ap.equals(swimmable.ap) && barrierSync.equals(swimmable.barrierSync);
+    }
+
+    public void PaintFish(int changeColor) {
+        this.col= changeColor;
     }
 }
 
