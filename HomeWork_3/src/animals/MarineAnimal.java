@@ -1,4 +1,7 @@
 package animals;
+
+import java.awt.*;
+
 public interface MarineAnimal {
-    public void PaintFish(int changeColor);
+    public void PaintFish(Color c);
 }
