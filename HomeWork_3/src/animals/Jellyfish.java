@@ -51,4 +51,5 @@ public class Jellyfish extends Swimmable {
     public Swimmable clone() {
         return new Jellyfish(size, x_front, y_front, horSpeed, verSpeed, col, ap,eatingFreq);
     }
+
 }
