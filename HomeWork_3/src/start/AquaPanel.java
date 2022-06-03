@@ -23,7 +23,7 @@ public class AquaPanel extends JPanel implements ActionListener {
     public JPanel buttonPanel, drawingPanel;
     JTable infoTable;
     JScrollPane scrollPane;
-    private final JButton addAnimalButtons, sleepButtons, wakeupButtons, resetButtons, foodButtons, infoButtons, AddPlantsDialog, duplicateButtons;
+    private final JButton addAnimalButtons, sleepButtons, wakeupButtons, resetButtons, foodButtons, infoButtons, AddPlantsDialog, duplicateButtons, DecoratorButtons;
     public JButton exitButtons;
     HashSet<Swimmable> animals;
     int sumCountEat = 0;
@@ -47,6 +47,7 @@ public class AquaPanel extends JPanel implements ActionListener {
         foodButtons = new JButton("Food");
         infoButtons = new JButton("Info");
         exitButtons = new JButton("Exit");
+        DecoratorButtons = new JButton("Decorator");
         AddPlantsDialog = new JButton("Add Plant");
         duplicateButtons = new JButton("Duplicate");
         buttonPanel = new JPanel();
@@ -57,7 +58,7 @@ public class AquaPanel extends JPanel implements ActionListener {
         add(drawingPanel,BorderLayout.NORTH);
         add(buttonPanel,BorderLayout.SOUTH);
 
-        buttonPanel.setLayout(new GridLayout(1,9));
+        buttonPanel.setLayout(new GridLayout(1,10));
         buttonPanel.add(addAnimalButtons);
         buttonPanel.add(sleepButtons);
         buttonPanel.add(wakeupButtons);
@@ -67,6 +68,7 @@ public class AquaPanel extends JPanel implements ActionListener {
         buttonPanel.add(AddPlantsDialog);
         buttonPanel.add(duplicateButtons);
         buttonPanel.add(exitButtons);
+        buttonPanel.add(DecoratorButtons);
 
         addAnimalButtons.addActionListener(this);
         sleepButtons.addActionListener(this);
@@ -77,6 +79,7 @@ public class AquaPanel extends JPanel implements ActionListener {
         exitButtons.addActionListener(this);
         AddPlantsDialog.addActionListener(this);
         duplicateButtons.addActionListener(this);
+        DecoratorButtons.addActionListener(this);
 
         animals = new HashSet<>();
         plants = new HashSet<>();
@@ -288,6 +291,18 @@ public class AquaPanel extends JPanel implements ActionListener {
                         }
                     }
                 }
+            }
+        }
+        else if (e.getSource() == DecoratorButtons) {
+            Window parentWindow = SwingUtilities.windowForComponent(this);
+            JFrame parentFrame = null;
+            if (parentWindow instanceof JFrame)
+                parentFrame = (JFrame)parentWindow;
+
+            DecoratorDialog dialog = new DecoratorDialog(parentFrame, "Decorator", true, animals_count,data);
+            dialog.setVisible(true);
+
+            if (false) {
             }
         }
     }
