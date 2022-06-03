@@ -26,7 +26,7 @@ public class AquaFrame extends JFrame implements ActionListener{
         // Show the converter.
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension dimension = toolkit.getScreenSize();
-        frameAqua.setBounds(dimension.width / 2 - 400, dimension.height / 2 - 400, 950, 700);
+        frameAqua.setBounds(dimension.width / 2 - 400, dimension.height / 2 - 400, 1000, 700);
         frameAqua.setVisible(true);
     }
 
