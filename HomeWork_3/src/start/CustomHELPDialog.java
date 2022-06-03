@@ -10,7 +10,7 @@ public class CustomHELPDialog {
     JFrame f;
     /**
      * constructor
-     * here we build the JDialog that present all the information we want too..
+     * here we build the JDialog that present all the information we want too.
      */
     public CustomHELPDialog(String msg){
         f=new JFrame();
