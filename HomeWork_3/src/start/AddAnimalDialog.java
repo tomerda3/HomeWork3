@@ -134,8 +134,7 @@ public class AddAnimalDialog extends JDialog implements ActionListener {
         add(mainPanel);
 
         addWindowListener(new WindowAdapter() {
-                              public void windowClosing(WindowEvent e)
-                              {
+                              public void windowClosing(WindowEvent e) {
                                   Window aboutDialog = e.getWindow();
                                   aboutDialog.dispose();
                               }
