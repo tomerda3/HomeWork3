@@ -123,10 +123,22 @@ public class AquaFrame extends JFrame implements ActionListener{
             System.exit(0);
         }
         else if (e.getSource() == jmenuitemSave) {
-            System.exit(0);
+            Window parentWindow = SwingUtilities.windowForComponent(this);
+            JFrame parentFrame = null;
+            if (parentWindow instanceof JFrame)
+                parentFrame = (JFrame) parentWindow;
+
+            MementoDialog dialog = new MementoDialog(parentFrame, "Duplicate Animal", true, panelAqua, true);
+            dialog.setVisible(true);
         }
         else if (e.getSource() == jmenuitemRestore) {
-            System.exit(0);
+            Window parentWindow = SwingUtilities.windowForComponent(this);
+            JFrame parentFrame = null;
+            if (parentWindow instanceof JFrame)
+                parentFrame = (JFrame) parentWindow;
+
+            MementoDialog dialog = new MementoDialog(parentFrame, "Duplicate Animal", true, panelAqua, false);
+            dialog.setVisible(true);
         }
     }
 }
