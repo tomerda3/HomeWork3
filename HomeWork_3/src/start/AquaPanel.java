@@ -228,10 +228,11 @@ public class AquaPanel extends JPanel implements ActionListener {
                     else
                         //im = new Zostera(dialog.getX_location(), dialog.getPlantSize()); // Without factory
                         im = (Zostera) PlantFactory.produceSeaCreature("Zostera");
+                    plants_count++;
                     im.setX(dialog.getX_location());
                     im.setSize(dialog.getPlantSize());
+                    im.setId(plants_count);
                     plants.add(im);
-                    plants_count++;
                 }
             }
         }
@@ -371,4 +372,11 @@ public class AquaPanel extends JPanel implements ActionListener {
         return "("+c.getRed()+","+c.getGreen()+","+c.getBlue()+")";
     }
 
+    public int getAnimals_count(){
+        return animals_count;
+    }
+
+    public int getPlants_count() {
+        return plants_count;
+    }
 }
