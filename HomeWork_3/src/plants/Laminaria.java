@@ -4,11 +4,11 @@ import java.awt.*;
 
 public class Laminaria extends Immobile {
     public Laminaria() {
-        super(50,30);
+        super(50,30,0);
     }
 
-    public Laminaria(int x,  int size) {
-        super(x, size);
+    public Laminaria(int x, int y,int size, int id) {
+        super(x, size, id);
     }
 
     public void drawCreature(Graphics g){
