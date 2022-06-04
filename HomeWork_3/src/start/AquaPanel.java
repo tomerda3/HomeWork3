@@ -165,6 +165,7 @@ public class AquaPanel extends JPanel implements ActionListener {
             animals.clear();
             plants.clear();
             animals_count = 0;
+            plants_count = 0;
             data[0] = new Object[]{"", "", "", "", "", ""};
             data[1] = new Object[]{"", "", "", "", "", ""};
             data[2] = new Object[]{"", "", "", "", "", ""};
