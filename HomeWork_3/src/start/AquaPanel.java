@@ -162,7 +162,6 @@ public class AquaPanel extends JPanel implements ActionListener {
             for(Swimmable s:animals) {
                 s.interrupt();
             }
-
             animals.clear();
             plants.clear();
             animals_count = 0;
@@ -180,9 +179,17 @@ public class AquaPanel extends JPanel implements ActionListener {
          */
         else if (e.getSource() == foodButtons) {
             if (animals.size()>0){
-                CyclicBarrier barrier = new CyclicBarrier(animals.size());
+                int count =0;
                 for(Swimmable s:animals) {
-                    s.setBarrierSync(barrier);
+                    if (s.getCurrentState() instanceof Hungry)
+                        count++;
+                }
+                if (count >0){
+                    CyclicBarrier barrier = new CyclicBarrier(count);
+                    for(Swimmable s:animals) {
+                        if (s.getCurrentState() instanceof Hungry)
+                            s.setBarrierSync(barrier);
+                    }
                 }
             }
             Worm.getInstance().setlocation(getWidth()/2,getHeight()/2);
