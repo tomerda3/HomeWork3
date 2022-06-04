@@ -16,13 +16,13 @@ public class MementoDialog extends JDialog implements ActionListener {
     private final JComboBox<String> comboAmount,comboPlanet;
     private JButton animalButtons,planetButtons;
     private AquaPanel aquaPanel;
-    private static int amount_Animal=0, amount_Planet=0;
+    private static int amount_Animal = 0, amount_Planet = 0;
     private boolean saveMemento;
-    public static HashSet<Swimmable> animalsMemento = new HashSet<>();;
-    public static HashSet<Immobile> plantsMemento = new HashSet<>();;
+    public static HashSet<Swimmable> animalsMemento = new HashSet<>();
+    public static HashSet<Immobile> plantsMemento = new HashSet<>();
 
 
-    MementoDialog(JFrame parent, String title, boolean modal, AquaPanel a,boolean saveMemento) {
+    MementoDialog(JFrame parent, String title, boolean modal, AquaPanel a, boolean saveMemento) {
         super(parent, title, modal);
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension dimension = toolkit.getScreenSize();
@@ -31,7 +31,7 @@ public class MementoDialog extends JDialog implements ActionListener {
         aquaPanel = a;
         amount_Animal = a.getAnimals_count();
         amount_Planet = a.getPlants_count();
-        this.saveMemento=saveMemento;
+        this.saveMemento = saveMemento;
 
         JPanel p1 = new JPanel();
         p1.setLayout(new GridLayout(2, 2, 20, 20));
@@ -41,30 +41,45 @@ public class MementoDialog extends JDialog implements ActionListener {
         JLabel jlabeltextAnimal;
         JLabel jlabeltextPlanet;
 
-        if (saveMemento == true){
+        if (saveMemento == true) {
             jlabeltextAnimal = new JLabel("Select Animal to save:");
             jlabeltextPlanet = new JLabel("Select Planet to save:");
 
-            String[] count = new String[amount_Animal];
-            for (int i = 1; i <= amount_Animal; i++) {
-                count[i - 1] = String.valueOf(i);
+            String[] count;
+            if (amount_Animal > 0) {
+                count = new String[amount_Animal];
+                for (int i = 1; i <= amount_Animal; i++) {
+                    count[i-1]= String.valueOf(i);
+                }
+            }
+            else {
+                count = new String[1];
+                count[0]= "There is no animals to save";
             }
             comboAmount = new JComboBox<>(count);
 
-            String[] countPlan = new String[amount_Planet];
-            for (int i = 1; i <= amount_Planet; i++) {
-                countPlan[i - 1] = String.valueOf(i);
+            String[] countPlan;
+            if (amount_Planet > 0) {
+                countPlan = new String[amount_Planet];
+                for (int i = 1; i <= amount_Planet; i++) {
+                    countPlan[i-1]= String.valueOf(i);
+                }
+            }
+            else {
+                countPlan = new String[1];
+                countPlan[0]= "There is no plants to save";
             }
             comboPlanet = new JComboBox<>(countPlan);
+
             animalButtons = new JButton("Save Animal");
             planetButtons = new JButton("Save Planet");
         }
-        else{
+        else {
             jlabeltextAnimal = new JLabel("Select Animal to restore:");
             jlabeltextPlanet = new JLabel("Select Planet to restore:");
             int i=0;
             String[] count;
-            if (animalsMemento != null){
+            if (animalsMemento.size() > 0) {
                 count = new String[animalsMemento.size()];
                 for (Swimmable s: animalsMemento) {
                     count[i++]= String.valueOf(s.getID());
@@ -77,7 +92,7 @@ public class MementoDialog extends JDialog implements ActionListener {
             comboAmount = new JComboBox<>(count);
             i=0;
             String[] countPlan;
-            if (plantsMemento != null){
+            if (plantsMemento.size() > 0) {
                 countPlan = new String[plantsMemento.size()];
                 for (Immobile s:  plantsMemento) {
                     countPlan[i++]= String.valueOf(s.getId());
@@ -111,36 +126,32 @@ public class MementoDialog extends JDialog implements ActionListener {
         add(mainPanel);
 
         addWindowListener(new WindowAdapter() {
-                              public void windowClosing(WindowEvent e) {
-                                  Window aboutDialog = e.getWindow();
-                                  aboutDialog.dispose();
-                              }
-                          }
+            public void windowClosing(WindowEvent e) {
+                Window aboutDialog = e.getWindow();
+                aboutDialog.dispose();
+            }
+        }
         );
         pack();
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == animalButtons) {
-            if (saveMemento){
-                if (aquaPanel.animals != null){
+            if (saveMemento) {
+                if (aquaPanel.animals != null) {
                     int id = comboAmount.getSelectedIndex()+1;
-                    System.out.println("id"+id);
                     for (Swimmable s:  aquaPanel.animals) {
-                        System.out.println("  id: "+id + "  s.getId(): "+s.getID());
                         if (id == s.getID())
                             animalsMemento.add(s);
                     }
                 }
             }
-            else{
-                if (animalsMemento !=null){
+            else {
+                if (animalsMemento != null) {
                     int id = comboAmount.getSelectedIndex()+1;
                     for (Swimmable s:  animalsMemento) {
-                        if (id == s.getID()){
-                            System.out.println("id "+id);
+                        if (id == s.getID()) {
                             aquaPanel.addAnimal(s);
-                            System.out.println("----ID "+s.getID());
                         }
                     }
                 }
@@ -148,18 +159,17 @@ public class MementoDialog extends JDialog implements ActionListener {
             this.dispose();
         }
         else if (e.getSource() == planetButtons) {
-            if (saveMemento){
-                if (aquaPanel.plants != null){
+            if (saveMemento) {
+                if (aquaPanel.plants != null) {
                     int id = comboPlanet.getSelectedIndex()+1;
                     for (Immobile s:  aquaPanel.plants) {
                         if (id == s.getId())
                             plantsMemento.add(s);
-
                     }
                 }
             }
-            else{
-                if (plantsMemento != null){
+            else {
+                if (plantsMemento != null) {
                     int id = comboPlanet.getSelectedIndex()+1;
                     for (Immobile s:  plantsMemento) {
                         if (id == s.getId())
