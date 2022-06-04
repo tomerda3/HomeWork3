@@ -386,4 +386,19 @@ public class AquaPanel extends JPanel implements ActionListener {
     public int getPlants_count() {
         return plants_count;
     }
+
+    public void addAnimal(Swimmable newAnimal){
+        if (animals_count < 5){
+            data[animals_count] = new Object[]{newAnimal.getAnimalName(), newAnimal.getColor(), newAnimal.getSize(), newAnimal.getHorSpeed(), newAnimal.getVerSpeed(), newAnimal.getEatCount()};
+            animals_count++;
+            Swimmable s;
+            if (newAnimal.getAnimalName() == "Fish")
+                s = new Fish(newAnimal.getSize(), getWidth()/2, getHeight()/2, newAnimal.getHorSpeed(), newAnimal.getVerSpeed(), newAnimal.getCol(), this,newAnimal.getEatingFreq());
+            else s = new Jellyfish(newAnimal.getSize(), getWidth()/2, getHeight()/2, newAnimal.getHorSpeed(), newAnimal.getVerSpeed(), newAnimal.getCol(), this,newAnimal.getEatingFreq());
+
+            s.setId(animals_count);
+            s.start();
+            animals.add(s);
+        }
+    }
 }
