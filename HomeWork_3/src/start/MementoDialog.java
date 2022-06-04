@@ -29,8 +29,8 @@ public class MementoDialog extends JDialog implements ActionListener {
         this.setBounds(dimension.width / 2 , dimension.height / 2 , 100, 100);
 
         aquaPanel = a;
-        amount_Animal += a.getAnimals_count();
-        amount_Planet += a.getPlants_count();
+        amount_Animal = a.getAnimals_count();
+        amount_Planet = a.getPlants_count();
         this.saveMemento=saveMemento;
 
         JPanel p1 = new JPanel();
@@ -65,11 +65,9 @@ public class MementoDialog extends JDialog implements ActionListener {
             int i=0;
             String[] count;
             if (animalsMemento != null){
-                System.out.println("-----here-----");
                 count = new String[animalsMemento.size()];
                 for (Swimmable s: animalsMemento) {
                     count[i++]= String.valueOf(s.getID());
-                    System.out.println("-s.getId():"+s.getID());
                 }
             }
             else {
@@ -127,7 +125,7 @@ public class MementoDialog extends JDialog implements ActionListener {
             if (saveMemento){
                 if (aquaPanel.animals != null){
                     int id = comboAmount.getSelectedIndex()+1;
-                    System.out.println("id"+comboAmount.getSelectedIndex()+1);
+                    System.out.println("id"+id);
                     for (Swimmable s:  aquaPanel.animals) {
                         System.out.println("  id: "+id + "  s.getId(): "+s.getID());
                         if (id == s.getID())
@@ -140,7 +138,9 @@ public class MementoDialog extends JDialog implements ActionListener {
                     int id = comboAmount.getSelectedIndex()+1;
                     for (Swimmable s:  animalsMemento) {
                         if (id == s.getID()){
-                            aquaPanel.animals.add(s);
+                            System.out.println("id "+id);
+                            aquaPanel.addAnimal(s);
+                            System.out.println("----ID "+s.getID());
                         }
                     }
                 }
@@ -154,6 +154,7 @@ public class MementoDialog extends JDialog implements ActionListener {
                     for (Immobile s:  aquaPanel.plants) {
                         if (id == s.getId())
                             plantsMemento.add(s);
+
                     }
                 }
             }
