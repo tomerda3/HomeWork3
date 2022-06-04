@@ -29,6 +29,11 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     protected int eatCount;
     protected int x_front;
     protected int y_front;
+
+    public int getEatingFreq() {
+        return eatingFreq;
+    }
+
     protected int x_dir = 1;
     protected boolean waitflag = false;
     public static boolean foodFlag = false;
@@ -61,7 +66,18 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
         this.eatingFreq = eatingFreq;
         currentState = new Satiated();
     }
-
+    public Swimmable(Swimmable copy){
+        this.horSpeed = copy.horSpeed;
+        this.verSpeed = copy.verSpeed;
+        this.ap  = copy.ap;
+        this.size = copy.size;
+        this.col = copy.col;
+        this.x_front = copy.x_front;
+        this.y_front = copy.y_front;
+        barrierSync = null;
+        this.eatingFreq = copy.eatingFreq;
+        currentState = new Satiated();
+    }
     /**
      * Abstract functions that any object that can swim must realize.
      */
@@ -100,6 +116,10 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     public String getColor() {
         String[] colors = {"Black", "Red", "Blue", "Green", "Cyan", "Orange", "Yellow", "Magenta", "Pink"};
         return colors[col-1];
+    }
+
+    public int getCol() {
+        return col;
     }
 
     /**
@@ -302,7 +322,6 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                 }
                 if (x_front - size/10 <= 0 && y_front + size/10 >= height) {
                     countfreq++;
-                    System.out.println("countfreq1: "+countfreq);
                     flag_x = true;
                     flag_y = false;
                 }
@@ -330,13 +349,11 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                 }
                 if (x_front - size/10 <= 0 && y_front - size/10 <= 0) {
                     countfreq++;
-                    System.out.println("countfreq1: "+countfreq);
                     flag_x = true;
                     flag_y = true;
                 }
                 else if (x_front - size/10 <= 0){
                     countfreq++;
-                    System.out.println("countfreq1: "+countfreq);
                     flag_x = true;
                 }
                 else if (y_front - size/10 <= 0)
