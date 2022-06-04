@@ -18,6 +18,9 @@ public class Fish extends Swimmable {
         super(30, 30, 30, 10, 10, 2, null,0);
     }
 
+    public Fish(Fish copy){
+        super(copy.size, copy.x_front, copy.y_front, copy.horSpeed, copy.verSpeed, copy.col, copy.ap,copy.eatingFreq);
+    }
     /**
      * A function that returns the class name "Fish".
      * @return the name "Fish" in String.
