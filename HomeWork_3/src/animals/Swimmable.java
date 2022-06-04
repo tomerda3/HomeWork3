@@ -37,6 +37,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     protected int id;
     protected int eatingFreq;
     protected Color c = null;
+    protected HungerState currentState;
 
     /**
      * A constructor who gets the following data of the animal:
@@ -58,6 +59,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
         this.y_front = y_front;
         barrierSync = null;
         this.eatingFreq = eatingFreq;
+        currentState = new Satiated();
     }
 
     /**
@@ -144,6 +146,10 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
         barrierSync = toSet;
     }
 
+    public HungerState getCurrentState() {
+        return currentState;
+    }
+
     /**
      * A function that causes the animal to start swimming in the aquarium.
      */
@@ -163,7 +169,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                 }
             }
 
-            if (foodFlag) {
+            if (currentState instanceof Hungry && foodFlag) {
                 try {
                     if(barrierSync != null)
                         barrierSync.await();
@@ -216,6 +222,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                         countfreq = 0;
                         setFoodFlag(false);
                         eatInc();
+                        setHungeryState(new Satiated());
                         ap.setInfo();
                     }
                 }
@@ -224,9 +231,10 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
             if (countfreq == eatingFreq) {
                 new CustomHELPDialog("I'm " + getID() + " and I'm hungry");
                 countfreq = 0;
+                setHungeryState(new Hungry());
             }
 
-            while (flag_x && flag_y && !waitflag && !foodFlag) {
+            while (flag_x && flag_y && !waitflag && (!foodFlag || currentState instanceof Satiated)) {
                 x_dir = 1;
                 x_front += horSpeed;
                 y_front += verSpeed;
@@ -248,7 +256,13 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                     flag_y = false;
             }
 
-            while (flag_x && !flag_y && !waitflag && !foodFlag) {
+            if (countfreq == eatingFreq) {
+                new CustomHELPDialog("I'm " + getID() + " and I'm hungry");
+                countfreq = 0;
+                setHungeryState(new Hungry());
+            }
+
+            while (flag_x && !flag_y && !waitflag && (!foodFlag || currentState instanceof Satiated)) {
                 x_dir = 1;
                 x_front += horSpeed;
                 y_front -= verSpeed;
@@ -271,7 +285,13 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                     flag_y = true;
             }
 
-            while (!flag_x && flag_y && !waitflag && !foodFlag) {
+            if (countfreq == eatingFreq) {
+                new CustomHELPDialog("I'm " + getID() + " and I'm hungry");
+                countfreq = 0;
+                setHungeryState(new Hungry());
+            }
+
+            while (!flag_x && flag_y && !waitflag && (!foodFlag || currentState instanceof Satiated)) {
                 x_dir = 0;
                 x_front -= horSpeed;
                 y_front += verSpeed;
@@ -282,6 +302,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                 }
                 if (x_front - size/10 <= 0 && y_front + size/10 >= height) {
                     countfreq++;
+                    System.out.println("countfreq1: "+countfreq);
                     flag_x = true;
                     flag_y = false;
                 }
@@ -293,7 +314,12 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                     flag_y = false;
             }
 
-            while (!flag_x && !flag_y && !waitflag && !foodFlag) {
+            if (countfreq == eatingFreq) {
+                new CustomHELPDialog("I'm " + getID() + " and I'm hungry");
+                countfreq = 0;
+                setHungeryState(new Hungry());
+            }
+            while (!flag_x && !flag_y && !waitflag && (!foodFlag || currentState instanceof Satiated)) {
                 x_dir = 0;
                 x_front -= horSpeed;
                 y_front -= verSpeed;
@@ -304,11 +330,13 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                 }
                 if (x_front - size/10 <= 0 && y_front - size/10 <= 0) {
                     countfreq++;
+                    System.out.println("countfreq1: "+countfreq);
                     flag_x = true;
                     flag_y = true;
                 }
                 else if (x_front - size/10 <= 0){
                     countfreq++;
+                    System.out.println("countfreq1: "+countfreq);
                     flag_x = true;
                 }
                 else if (y_front - size/10 <= 0)
@@ -369,6 +397,8 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
         this.c = c;
     }
 
-
+    public void setHungeryState(HungerState state) {
+        currentState=state;
+    }
 }
 
