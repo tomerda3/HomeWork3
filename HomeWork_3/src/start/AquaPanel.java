@@ -31,6 +31,7 @@ public class AquaPanel extends JPanel implements ActionListener {
     Object[][] data = new Object[6][6];
     private Image image;
     HashSet<Immobile> plants;
+    private AbstractSeaFactory animalFactory = new AnimalFactory(), plantFactory = new PlantFactory();
 
     /**
      * constructor
@@ -115,10 +116,10 @@ public class AquaPanel extends JPanel implements ActionListener {
                 if (animals_count < 5) {
                     if (Objects.equals(dialog.getAnimal_Type(), "Fish"))
                         //s = new Fish(dialog.getAnimalSize(), getWidth() / 2, getHeight() / 2, dialog.gethSpeed(), dialog.getvSpeed(), dialog.getAnimalColor(), this); // Without factory
-                        s = (Fish) AnimalFactory.produceSeaCreature("Fish");
+                        s = (Fish) animalFactory.produceSeaCreature("Fish");
                     else
                         //s = new Jellyfish(dialog.getAnimalSize(), getWidth() / 2, getHeight() / 2, dialog.gethSpeed(), dialog.getvSpeed(), dialog.getAnimalColor(), this); // Without factory
-                        s = (Jellyfish) AnimalFactory.produceSeaCreature("Jellyfish");
+                        s = (Jellyfish) animalFactory.produceSeaCreature("Jellyfish");
                     s.setSize(dialog.getAnimalSize());
                     s.setX_front(getWidth() / 2);
                     s.setY_front(getHeight() / 2);
@@ -232,10 +233,10 @@ public class AquaPanel extends JPanel implements ActionListener {
                 if (plants_count < 5) {
                     if (Objects.equals(dialog.getPlant_Type(), "Laminaria"))
                         //im = new Laminaria(dialog.getX_location(), dialog.getPlantSize()); // Without factory
-                        im = (Laminaria) PlantFactory.produceSeaCreature("Laminaria");
+                        im = (Laminaria) plantFactory.produceSeaCreature("Laminaria");
                     else
                         //im = new Zostera(dialog.getX_location(), dialog.getPlantSize()); // Without factory
-                        im = (Zostera) PlantFactory.produceSeaCreature("Zostera");
+                        im = (Zostera) plantFactory.produceSeaCreature("Zostera");
                     plants_count++;
                     im.setX(dialog.getX_location());
                     im.setSize(dialog.getPlantSize());
@@ -275,9 +276,9 @@ public class AquaPanel extends JPanel implements ActionListener {
                         }
                         else {
                             if (Objects.equals(dialog.getAnimal_Type(), "Fish"))
-                                s = (Fish) AnimalFactory.produceSeaCreature("Fish");
+                                s = (Fish) animalFactory.produceSeaCreature("Fish");
                             else
-                                s = (Jellyfish) AnimalFactory.produceSeaCreature("Jellyfish");
+                                s = (Jellyfish) animalFactory.produceSeaCreature("Jellyfish");
                             s.setSize(dialog.getAnimalSize());
                             s.setX_front(getWidth() / 2);
                             s.setY_front(getHeight() / 2);
