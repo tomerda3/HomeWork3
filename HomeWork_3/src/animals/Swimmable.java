@@ -13,7 +13,7 @@ import java.util.concurrent.CyclicBarrier;
  * @see Fish
  * @see Jellyfish
  */
-public abstract class Swimmable extends Thread  implements SeaCreature, Cloneable,MarineAnimal{
+public abstract class Swimmable extends Thread  implements SeaCreature, Cloneable, MarineAnimal{
     /**
      * DISTANCE_EAT - Represents how much animal can eat.
      * eatCount - Represents the amount of food the animal ate, start from 0.
@@ -29,11 +29,6 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
     protected int eatCount;
     protected int x_front;
     protected int y_front;
-
-    public int getEatingFreq() {
-        return eatingFreq;
-    }
-
     protected int x_dir = 1;
     protected boolean waitflag = false;
     public static boolean foodFlag = false;
@@ -338,6 +333,7 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
                 countfreq = 0;
                 setHungeryState(new Hungry());
             }
+
             while (!flag_x && !flag_y && !waitflag && (!foodFlag || currentState instanceof Satiated)) {
                 x_dir = 0;
                 x_front -= horSpeed;
@@ -416,6 +412,10 @@ public abstract class Swimmable extends Thread  implements SeaCreature, Cloneabl
 
     public void setHungeryState(HungerState state) {
         currentState=state;
+    }
+
+    public int getEatingFreq() {
+        return eatingFreq;
     }
 }
 
