@@ -1,7 +1,9 @@
 package animals;
 
-public class AnimalFactory {
-    public static Object produceSeaCreature(String type) {
+import start.AbstractSeaFactory;
+
+public class AnimalFactory implements AbstractSeaFactory {
+    public Object produceSeaCreature(String type) {
         Swimmable animal = null;
         switch (type)
         {
