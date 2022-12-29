@@ -1,7 +1,9 @@
 package plants;
 
-public class PlantFactory {
-    public static Object produceSeaCreature(String type) {
+import start.AbstractSeaFactory;
+
+public class PlantFactory implements AbstractSeaFactory {
+    public Object produceSeaCreature(String type) {
         Immobile plant = null;
         switch (type)
         {
